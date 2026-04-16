@@ -22,23 +22,62 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
-    <x-auth-header title="Forgot password" description="Enter your email to receive a password reset link" />
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <div class="w-full max-w-md">
 
-    <form wire:submit="sendPasswordResetLink" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <div class="grid gap-2">
-            <flux:input wire:model="email" label="{{ __('Email Address') }}" type="email" name="email" required autofocus placeholder="email@example.com" />
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Attendance System</h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    Reset password akun Anda
+                </p>
+            </div>
+
+            <!-- Status -->
+            @if (session('status'))
+                <div class="mb-4 text-sm text-green-600 text-center">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form wire:submit="sendPasswordResetLink" class="space-y-5">
+
+                <!-- Email -->
+                <div>
+                    <label class="text-sm text-gray-600">Email</label>
+                    <input wire:model="email" type="email" placeholder="email@example.com"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    @error('email')
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Button -->
+                <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    Kirim Link Reset
+                </button>
+
+            </form>
+
         </div>
 
-        <flux:button variant="primary" type="submit" class="w-full">{{ __('Email password reset link') }}</flux:button>
-    </form>
+        <!-- Back to login -->
+        <p class="text-center text-sm text-gray-500 mt-6">
+            Ingat password?
+            <a href="{{ route('login') }}" class="text-indigo-600 font-medium hover:underline">
+                Masuk
+            </a>
+        </p>
 
-    <div class="space-x-1 text-center text-sm text-zinc-400">
-        Or, return to
-        <x-text-link href="{{ route('login') }}">log in</x-text-link>
+        <!-- Footer -->
+        <p class="text-center text-xs text-gray-400 mt-2">
+            © {{ date('Y') }} Attendance System. All rights reserved.
+        </p>
+
     </div>
 </div>
