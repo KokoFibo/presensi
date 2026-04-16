@@ -41,17 +41,16 @@ new #[Layout('components.layouts.auth')] class extends Component {
         // Here we will attempt to reset the user's password. If it is successful we
         // will update the password on an actual user model and persist it to the
         // database. Otherwise we will parse the error and return the response.
-        $status = Password::reset(
-            $this->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) {
-                $user->forceFill([
+        $status = Password::reset($this->only('email', 'password', 'password_confirmation', 'token'), function ($user) {
+            $user
+                ->forceFill([
                     'password' => Hash::make($this->password),
                     'remember_token' => Str::random(60),
-                ])->save();
+                ])
+                ->save();
 
-                event(new PasswordReset($user));
-            }
-        );
+            event(new PasswordReset($user));
+        });
 
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can
@@ -68,50 +67,75 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
-    <x-auth-header title="Reset password" description="Please enter your new password below" />
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <div class="w-full max-w-md">
 
-    <form wire:submit="resetPassword" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        <div class="grid gap-2">
-            <flux:input wire:model="email" id="email" label="{{ __('Email') }}" type="email" name="email" required autocomplete="email" />
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Attendance System</h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    Buat password baru
+                </p>
+            </div>
+
+            <!-- Status -->
+            @if (session('status'))
+                <div class="mb-4 text-sm text-green-600 text-center">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            <form wire:submit="resetPassword" class="space-y-5">
+
+                <!-- Email -->
+                <div>
+                    <label class="text-sm text-gray-600">Email</label>
+                    <input wire:model="email" type="email"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
+                </div>
+
+                <!-- Password -->
+                <div x-data="{ show: false }">
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm text-gray-600">Password Baru</label>
+                        <button type="button" @click="show = !show" class="text-xs text-indigo-500">
+                            <span x-text="show ? 'Sembunyikan' : 'Lihat'"></span>
+                        </button>
+                    </div>
+
+                    <input :type="show ? 'text' : 'password'" wire:model="password" placeholder="Minimal 8 karakter"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    @error('password')
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label class="text-sm text-gray-600">Konfirmasi Password</label>
+                    <input wire:model="password_confirmation" type="password" placeholder="Ulangi password"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <!-- Button -->
+                <button type="submit" wire:loading.attr="disabled"
+                    class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    <span wire:loading.remove>Reset Password</span>
+                    <span wire:loading>Menyimpan...</span>
+                </button>
+
+            </form>
+
         </div>
 
-        <!-- Password -->
-        <div class="grid gap-2">
-            <flux:input
-                wire:model="password"
-                id="password"
-                label="{{ __('Password') }}"
-                type="password"
-                name="password"
-                required
-                autocomplete="new-password"
-                placeholder="Password"
-            />
-        </div>
+        <!-- Footer -->
+        <p class="text-center text-xs text-gray-400 mt-6">
+            © {{ date('Y') }} Attendance System. All rights reserved.
+        </p>
 
-        <!-- Confirm Password -->
-        <div class="grid gap-2">
-            <flux:input
-                wire:model="password_confirmation"
-                id="password_confirmation"
-                label="{{ __('Confirm password') }}"
-                type="password"
-                name="password_confirmation"
-                required
-                autocomplete="new-password"
-                placeholder="Confirm password"
-            />
-        </div>
-
-        <div class="flex items-center justify-end">
-            <flux:button type="submit" variant="primary" class="w-full">
-                {{ __('Reset password') }}
-            </flux:button>
-        </div>
-    </form>
+    </div>
 </div>

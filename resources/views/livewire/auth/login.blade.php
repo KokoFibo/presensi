@@ -72,43 +72,76 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="flex flex-col gap-6">
-    {{-- <x-auth-header title="Log in to your account" description="Enter your email and password below to log in" /> --}}
-    <x-auth-header title="Log in ke akun" description="Masukkan email dan password untuk log in" />
+<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
 
-    <!-- Session Status -->
-    <x-auth-session-status class="text-center" :status="session('status')" />
+    <div class="w-full max-w-md">
 
-    <form wire:submit="login" class="flex flex-col gap-6">
-        <!-- Email Address -->
-        {{-- <flux:input wire:model="email" label="{{ __('Email address') }}" type="email" name="email" required autofocus --}}
-        <flux:input wire:model="email" label="{{ __('Email') }}" type="email" name="email" required autofocus
-            autocomplete="email" placeholder="email@example.com" />
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
 
-        <!-- Password -->
-        <div class="relative">
-            <flux:input wire:model="password" label="{{ __('Password') }}" type="password" name="password" required
-                autocomplete="current-password" placeholder="Password" />
+            <!-- Logo / Title -->
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Attendance System</h1>
+                <p class="text-gray-500 text-sm mt-1">
+                    Masuk ke akun Anda
+                </p>
+            </div>
 
-            @if (Route::has('password.request'))
-                <x-text-link class="absolute right-0 top-0" href="{{ route('password.request') }}">
-                    {{-- {{ __('Forgot your password?') }} --}}
-                    {{ __('Lupa password?') }}
-                </x-text-link>
+            <!-- Status -->
+            @if (session('status'))
+                <div class="mb-4 text-sm text-green-600 text-center">
+                    {{ session('status') }}
+                </div>
             @endif
+
+            <form wire:submit="login" class="space-y-5">
+
+                <!-- Email -->
+                <div>
+                    <label class="text-sm text-gray-600">Email</label>
+                    <input wire:model="email" type="email" placeholder="email@example.com"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    @error('email')
+                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <div class="flex justify-between items-center">
+                        <label class="text-sm text-gray-600">Password</label>
+
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="text-xs text-indigo-500 hover:underline">
+                                Lupa password?
+                            </a>
+                        @endif
+                    </div>
+
+                    <input wire:model="password" type="password" placeholder="••••••••"
+                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                </div>
+
+                <!-- Remember -->
+                <div class="flex items-center gap-2">
+                    <input type="checkbox" wire:model="remember" class="rounded">
+                    <span class="text-sm text-gray-600">Ingat saya</span>
+                </div>
+
+                <!-- Button -->
+                <button type="submit"
+                    class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
+                    Masuk
+                </button>
+
+            </form>
+
         </div>
 
-        <!-- Remember Me -->
-        {{-- <flux:checkbox wire:model="remember" label="{{ __('Remember me') }}" /> --}}
-        <flux:checkbox wire:model="remember" label="{{ __('Ingat saya') }}" />
+        <!-- Footer -->
+        <p class="text-center text-xs text-gray-400 mt-6">
+            © {{ date('Y') }} Attendance System. All rights reserved.
+        </p>
 
-        <div class="flex items-center justify-end">
-            <flux:button variant="primary" type="submit" class="w-full">{{ __('Log in') }}</flux:button>
-        </div>
-    </form>
-
-    <div class="space-x-1 text-center text-sm text-zinc-600 dark:text-zinc-400">
-        {{-- Don't have an account? --}}
-        {{-- <x-text-link href="{{ route('register') }}">Sign up</x-text-link> --}}
     </div>
 </div>
