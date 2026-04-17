@@ -72,76 +72,84 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
 
-    <div class="w-full max-w-md">
+<div class="w-full max-w-md">
 
-        <!-- Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-lg">
 
-            <!-- Logo / Title -->
-            <div class="text-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Attendance System</h1>
-                <p class="text-gray-500 text-sm mt-1">
-                    Masuk ke akun Anda
-                </p>
-            </div>
-
-            <!-- Status -->
-            @if (session('status'))
-                <div class="mb-4 text-sm text-green-600 text-center">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form wire:submit="login" class="space-y-5">
-
-                <!-- Email -->
-                <div>
-                    <label class="text-sm text-gray-600">Email</label>
-                    <input wire:model="email" type="email" placeholder="email@example.com"
-                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    @error('email')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Password -->
-                <div>
-                    <div class="flex justify-between items-center">
-                        <label class="text-sm text-gray-600">Password</label>
-
-                        @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-xs text-indigo-500 hover:underline">
-                                Lupa password?
-                            </a>
-                        @endif
-                    </div>
-
-                    <input wire:model="password" type="password" placeholder="••••••••"
-                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-
-                <!-- Remember -->
-                <div class="flex items-center gap-2">
-                    <input type="checkbox" wire:model="remember" class="rounded">
-                    <span class="text-sm text-gray-600">Ingat saya</span>
-                </div>
-
-                <!-- Button -->
-                <button type="submit"
-                    class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                    Masuk
-                </button>
-
-            </form>
-
+        <!-- Title -->
+        <div class="text-center mb-8 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">
+                Attendance System
+            </h1>
+            <p class="text-gray-500 text-sm">
+                Silakan masuk ke akun Anda
+            </p>
         </div>
 
-        <!-- Footer -->
-        <p class="text-center text-xs text-gray-400 mt-6">
-            © {{ date('Y') }} Attendance System. All rights reserved.
-        </p>
+        <!-- Status -->
+        @if (session('status'))
+            <div class="mb-4 text-sm text-green-600 text-center">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <form wire:submit="login" class="space-y-5">
+
+            <!-- Email -->
+            <div class="group">
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                    Email Address
+                </label>
+
+                <input wire:model="email" type="email" placeholder="nama@email.com"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+
+                @error('email')
+                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Password -->
+            <div class="group">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-gray-700">
+                        Password
+                    </label>
+
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}"
+                            class="text-xs font-medium text-[#8c7851] hover:underline">
+                            Lupa Password?
+                        </a>
+                    @endif
+                </div>
+
+                <input wire:model="password" type="password" placeholder="••••••••"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+            </div>
+
+            <!-- Remember -->
+            <div class="flex items-center">
+                <input type="checkbox" wire:model="remember"
+                    class="w-4 h-4 rounded border-gray-300 text-[#8c7851] focus:ring-[#8c7851]">
+                <span class="ml-2 text-sm text-gray-600">Ingat saya</span>
+            </div>
+
+            <!-- Button -->
+            <button type="submit"
+                class="w-full py-3 px-4 rounded-xl text-white font-bold tracking-wide transition-all duration-300 active:scale-95"
+                style="background-color: #1a1c1e;">
+                MASUK
+            </button>
+
+        </form>
 
     </div>
+
+    <!-- Footer -->
+    <p class="text-center text-[10px] text-gray-400 mt-4">
+        © {{ date('Y') }} Attendance System
+    </p>
+
 </div>
