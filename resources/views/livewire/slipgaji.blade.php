@@ -24,12 +24,12 @@
             @else
                 <!-- Header -->
                 <div class="space-y-2">
-                    <h1 class="text-lg font-bold text-gray-800 dark:text-gray-100">
+                    <h1 class="text-lg font-bold text-gray-800 dark:text-gray-600">
                         Slip Gaji
                     </h1>
 
                     <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-500 dark:text-gray-400">
+                        <div class="text-sm text-gray-500 dark:text-gray-600">
                             {{ \Carbon\Carbon::create()->month($month)->locale('id')->translatedFormat('F') }}
                             {{ $year }}
                         </div>
