@@ -98,7 +98,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 </label>
 
                 <input wire:model="email" type="email" readonly
-                    class="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed">
+                    class="dark:text-gray-900 w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed">
             </div>
 
             <!-- Password -->
@@ -115,7 +115,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 </div>
 
                 <input :type="show ? 'text' : 'password'" wire:model="password" placeholder="Minimal 8 karakter"
-                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+                    class="dark:text-gray-900 w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
 
                 @error('password')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
@@ -129,7 +129,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 </label>
 
                 <input wire:model="password_confirmation" type="password" placeholder="Ulangi password"
-                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+                    class="dark:text-gray-900 w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
             </div>
 
             <!-- Button -->

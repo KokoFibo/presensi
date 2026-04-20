@@ -1,16 +1,19 @@
 <div>
     <x-layouts.app>
 
-        <div class="p-4 space-y-4 pb-24"> <!-- ⬅️ penting: kasih padding bawah -->
-            @if (auth()->user()->outsource == 1)
-                <div class="p-4 pb-24">
-                    <div class="bg-white rounded-2xl shadow border p-6 text-center space-y-3">
+        <div class="p-4 space-y-4 pb-24">
 
-                        <div class="text-lg font-semibold text-gray-800">
+            @if (auth()->user()->outsource == 1)
+
+                <div class="p-4 pb-24">
+                    <div
+                        class="bg-white dark:bg-gray-900 rounded-2xl shadow border dark:border-gray-700 p-6 text-center space-y-3">
+
+                        <div class="text-lg font-semibold text-gray-800 dark:text-gray-100">
                             Akses Ditolak
                         </div>
 
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">
                             Anda tidak memiliki akses untuk melihat slip gaji.
                         </div>
 
@@ -21,18 +24,19 @@
             @else
                 <!-- Header -->
                 <div class="space-y-2">
-                    <h1 class="text-lg font-bold text-gray-800">
+                    <h1 class="text-lg font-bold text-gray-800 dark:text-gray-100">
                         Slip Gaji
                     </h1>
 
                     <div class="flex items-center justify-between">
-                        <div class="text-sm text-gray-500">
+                        <div class="text-sm text-gray-500 dark:text-gray-400">
                             {{ \Carbon\Carbon::create()->month($month)->locale('id')->translatedFormat('F') }}
                             {{ $year }}
                         </div>
 
                         <select wire:model.live="selectedMonth"
-                            class="text-sm border border-gray-200 rounded-lg px-2 py-1 focus:ring-2 focus:ring-blue-500">
+                            class="text-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 dark:text-gray-100 rounded-lg px-2 py-1 focus:ring-2 focus:ring-blue-500">
+
                             @foreach ($months as $month)
                                 <option value="{{ $month['value'] }}">
                                     {{ $month['label'] }}
@@ -52,87 +56,89 @@
 
                 <!-- 📊 Summary -->
                 <div class="grid grid-cols-3 gap-2">
-                    <div class="bg-white rounded-xl p-3 shadow border text-center">
-                        <div class="text-[11px] text-gray-500">Jam Kerja</div>
-                        <div class="font-semibold">{{ $datas['jam_kerja'] }}</div>
+
+                    <div
+                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
+                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Jam Kerja</div>
+                        <div class="font-semibold text-gray-800 dark:text-gray-100">
+                            {{ $datas['jam_kerja'] }}
+                        </div>
                     </div>
 
-                    <div class="bg-white rounded-xl p-3 shadow border text-center">
-                        <div class="text-[11px] text-gray-500">Lembur</div>
+                    <div
+                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
+                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Lembur</div>
                         <div class="font-semibold text-orange-500">
                             {{ $datas['jam_lembur'] }}
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl p-3 shadow border text-center">
-                        <div class="text-[11px] text-gray-500">Hari</div>
+                    <div
+                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
+                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Hari</div>
                         <div class="font-semibold text-purple-500">
                             {{ $datas['hari_kerja'] }}
                         </div>
                     </div>
+
                 </div>
 
                 <!-- 🧾 Detail -->
-                <div class="bg-white rounded-2xl shadow border border-gray-100 p-4 space-y-3">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl shadow border dark:border-gray-700 p-4 space-y-3">
 
-                    <div class="text-sm font-semibold text-gray-700">
+                    <div class="text-sm font-semibold text-gray-700 dark:text-gray-100">
                         Detail Gaji
                     </div>
 
-                    <div class="divide-y text-sm">
+                    <div class="divide-y divide-gray-100 dark:divide-gray-700 text-sm">
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">ID</span>
-                            <span class="font-medium">{{ $datas['id_karyawan'] }}</span>
+                            <span class="text-gray-500 dark:text-gray-400">ID</span>
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['id_karyawan'] }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">Hari Kerja</span>
-                            <span class="font-medium">{{ $datas['hari_kerja'] }} hari</span>
+                            <span class="text-gray-500 dark:text-gray-400">Hari Kerja</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['hari_kerja'] }}
+                                hari</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">Jam Kerja</span>
-                            <span class="font-medium">{{ $datas['jam_kerja'] }} jam</span>
+                            <span class="text-gray-500 dark:text-gray-400">Jam Kerja</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_kerja'] }}
+                                jam</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">Jam Lembur</span>
-                            <span class="font-medium text-orange-500">
-                                {{ $datas['jam_lembur'] }} jam
-                            </span>
+                            <span class="text-gray-500 dark:text-gray-400">Jam Lembur</span>
+                            <span class="font-medium text-orange-500">{{ $datas['jam_lembur'] }} jam</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">BPJS JHT</span>
-                            <span class="font-medium text-red-500">
-                                Rp {{ number_format($datas['jht']) }}
-                            </span>
+                            <span class="text-gray-500 dark:text-gray-400">BPJS JHT</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jht']) }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">BPJS JP</span>
-                            <span class="font-medium text-red-500">
-                                Rp {{ number_format($datas['jp']) }}
-                            </span>
+                            <span class="text-gray-500 dark:text-gray-400">BPJS JP</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jp']) }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">PTKP</span>
-                            <span class="font-medium">{{ $datas['ptkp'] }}</span>
+                            <span class="text-gray-500 dark:text-gray-400">PTKP</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['ptkp'] }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
-                            <span class="text-gray-500">PPh21</span>
-                            <span class="font-medium text-red-500">
-                                Rp {{ number_format($datas['pph21']) }}
-                            </span>
+                            <span class="text-gray-500 dark:text-gray-400">PPh21</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['pph21']) }}</span>
                         </div>
 
                     </div>
 
-                    <div class="border-t pt-3 flex justify-between items-center">
-                        <span class="font-semibold text-gray-800">
+                    <div class="border-t dark:border-gray-700 pt-3 flex justify-between items-center">
+                        <span class="font-semibold text-gray-800 dark:text-gray-100">
                             Total Bersih
                         </span>
                         <span class="text-lg font-bold text-blue-600">
@@ -142,18 +148,20 @@
 
                 </div>
 
+            @endif
+
         </div>
 
-        <!-- 🔻 Navbar kamu (TIDAK DIUBAH) -->
+        <!-- 🔻 Navbar kamu (TIDAK DIUBAH SAMA SEKALI, hanya ditambah dark mode) -->
         <div
             class="fixed bottom-0 left-0 right-0 z-50 
-            bg-white/80 backdrop-blur-lg border-t border-gray-200">
+            bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700">
 
             <div class="flex justify-between p-10 py-2 text-xs">
 
                 <a href="{{ route('presensi') }}"
                     class="flex flex-col items-center gap-1 transition active:scale-95
-                    {{ request()->routeIs('presensi') ? 'text-blue-600' : 'text-gray-400' }}">
+                    {{ request()->routeIs('presensi') ? 'text-blue-600' : 'text-gray-400 dark:text-gray-500' }}">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                         stroke="currentColor" class="w-6 h-6">
@@ -166,7 +174,7 @@
 
                 <a href="{{ route('slipgaji') }}"
                     class="flex flex-col items-center gap-1 transition active:scale-95
-                    {{ request()->routeIs('slipgaji') ? 'text-blue-600' : 'text-gray-400' }}">
+                    {{ request()->routeIs('slipgaji') ? 'text-blue-600' : 'text-gray-400 dark:text-gray-500' }}">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                         stroke="currentColor" class="w-6 h-6">
@@ -178,7 +186,7 @@
                 </a>
 
                 <button wire:click="logout"
-                    class="flex flex-col items-center gap-1 text-gray-400 transition active:scale-95">
+                    class="flex flex-col items-center gap-1 text-gray-400 dark:text-gray-500 transition active:scale-95">
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8"
                         stroke="currentColor" class="w-6 h-6">
@@ -190,7 +198,6 @@
                 </button>
 
             </div>
-            @endif
         </div>
 
     </x-layouts.app>

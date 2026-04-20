@@ -72,7 +72,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 </label>
 
                 <input wire:model="email" type="email" placeholder="nama@email.com"
-                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+                    class="dark:text-gray-900 w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
 
                 @error('email')
                     <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
