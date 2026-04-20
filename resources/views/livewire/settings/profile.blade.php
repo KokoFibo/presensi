@@ -66,10 +66,10 @@ new class extends Component {
     @include('partials.settings-heading')
 
     {{-- <x-settings.layout heading="Profile" subheading="Update your name and email address"> --}}
-    <x-settings.layout heading="Profile" subheading="Update nama dan alamat email anda">
+    <x-settings.layout heading="Profile" subheading="Update alamat email anda">
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="name" label="{{ __('Nama') }}" type="text" name="name" required autofocus
-                autocomplete="name" />
+            {{-- <flux:input wire:model="name" label="{{ __('Nama') }}" type="text" name="name" required autofocus
+                autocomplete="name" /> --}}
 
             <div>
                 <flux:input wire:model="email" label="{{ __('Email') }}" type="email" name="email" required
@@ -82,13 +82,15 @@ new class extends Component {
 
                             <button wire:click.prevent="resendVerificationNotification"
                                 class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                {{ __('Click here to re-send the verification email.') }}
+                                {{-- {{ __('Click here to re-send the verification email.') }} --}}
+                                {{ __('Kirim ulang link verifikasi') }}
                             </button>
                         </p>
 
                         @if (session('status') === 'verification-link-sent')
                             <p class="mt-2 text-sm font-medium text-green-600">
-                                {{ __('A new verification link has been sent to your email address.') }}
+                                {{-- {{ __('A new verification link has been sent to your email address.') }} --}}
+                                {{ __('Link verifikasi telah dikirim ke alamat email Anda.') }}
                             </p>
                         @endif
                     </div>

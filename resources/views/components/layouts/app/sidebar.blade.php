@@ -124,7 +124,6 @@
                 </flux:menu.item>
         </flux:dropdown>
     </flux:header>
-
     {{ $slot }}
 
     @fluxScripts
