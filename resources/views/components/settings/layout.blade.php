@@ -14,7 +14,6 @@
         <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
 
         <div class="mt-5 w-full max-w-lg">
-            ss
             {{ $slot }}
         </div>
     </div>
