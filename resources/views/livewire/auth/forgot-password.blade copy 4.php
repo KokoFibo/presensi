@@ -7,6 +7,9 @@ use Livewire\Volt\Component;
 new #[Layout('components.layouts.auth')] class extends Component {
     public string $email = '';
 
+    /**
+     * Send a password reset link to the provided email address.
+     */
     public function sendPasswordResetLink(): void
     {
         $this->validate([
@@ -22,29 +25,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
 <div class="w-full max-w-md">
 
-    <!-- Card -->
-    <div class="relative bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-lg">
-
-        <!-- 🔥 OVERLAY LOADING -->
-        <div wire:loading.flex wire:target="sendPasswordResetLink"
-            class="absolute inset-0 z-10 items-center justify-center bg-white/70 backdrop-blur-sm rounded-2xl">
-
-            <div class="flex flex-col items-center gap-3">
-
-                <!-- Spinner -->
-                <svg class="animate-spin h-6 w-6 text-[#1a1c1e]" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                    </circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
-                    </path>
-                </svg>
-
-                <span class="text-sm text-gray-600">
-                    Mengirim email...
-                </span>
-
-            </div>
-        </div>
+    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-lg">
 
         <!-- Title -->
         <div class="text-center mb-8 sm:mb-10">
@@ -80,8 +61,13 @@ new #[Layout('components.layouts.auth')] class extends Component {
             </div>
 
             <!-- Button -->
+            {{-- <button type="submit"
+                class="w-full py-3 px-4 rounded-xl text-white font-bold tracking-wide transition-all duration-300 active:scale-95"
+                style="background-color: #1a1c1e;">
+                KIRIM LINK RESET
+            </button> --}}
+
             <button type="submit" wire:loading.attr="disabled" wire:target="sendPasswordResetLink"
-                wire:loading.class="opacity-70 cursor-not-allowed"
                 class="w-full py-3 px-4 rounded-xl text-white font-bold tracking-wide transition-all duration-300 active:scale-95 flex items-center justify-center gap-2"
                 style="background-color: #1a1c1e;">
 
@@ -93,6 +79,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 <!-- Loading -->
                 <span wire:loading wire:target="sendPasswordResetLink" class="flex items-center gap-2">
 
+                    <!-- Spinner -->
                     <svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
                             stroke-width="4"></circle>
@@ -107,7 +94,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         </form>
 
-        <!-- Back -->
+        <!-- Back to login -->
         <p class="text-center text-sm text-gray-500 mt-6">
             Ingat password?
             <a href="{{ route('login') }}" class="font-medium text-[#8c7851] hover:underline">

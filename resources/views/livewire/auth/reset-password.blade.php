@@ -67,75 +67,86 @@ new #[Layout('components.layouts.auth')] class extends Component {
     }
 }; ?>
 
-<div class="min-h-screen flex items-center justify-center bg-gray-50 px-4">
 
-    <div class="w-full max-w-md">
+<div class="w-full max-w-md">
 
-        <!-- Card -->
-        <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
+    <div class="bg-white p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-lg">
 
-            <!-- Header -->
-            <div class="text-center mb-6">
-                <h1 class="text-2xl font-bold text-gray-800">Attendance System</h1>
-                <p class="text-gray-500 text-sm mt-1">
-                    Buat password baru
-                </p>
-            </div>
-
-            <!-- Status -->
-            @if (session('status'))
-                <div class="mb-4 text-sm text-green-600 text-center">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form wire:submit="resetPassword" class="space-y-5">
-
-                <!-- Email -->
-                <div>
-                    <label class="text-sm text-gray-600">Email</label>
-                    <input wire:model="email" type="email"
-                        class="mt-1 w-full px-4 py-2.5 border rounded-lg bg-gray-100 cursor-not-allowed" readonly>
-                </div>
-
-                <!-- Password -->
-                <div x-data="{ show: false }">
-                    <div class="flex justify-between items-center">
-                        <label class="text-sm text-gray-600">Password Baru</label>
-                        <button type="button" @click="show = !show" class="text-xs text-indigo-500">
-                            <span x-text="show ? 'Sembunyikan' : 'Lihat'"></span>
-                        </button>
-                    </div>
-
-                    <input :type="show ? 'text' : 'password'" wire:model="password" placeholder="Minimal 8 karakter"
-                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                    @error('password')
-                        <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Confirm Password -->
-                <div>
-                    <label class="text-sm text-gray-600">Konfirmasi Password</label>
-                    <input wire:model="password_confirmation" type="password" placeholder="Ulangi password"
-                        class="mt-1 w-full px-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
-                </div>
-
-                <!-- Button -->
-                <button type="submit" wire:loading.attr="disabled"
-                    class="w-full bg-indigo-600 text-white py-2.5 rounded-lg font-semibold hover:bg-indigo-700 transition">
-                    <span wire:loading.remove>Reset Password</span>
-                    <span wire:loading>Menyimpan...</span>
-                </button>
-
-            </form>
-
+        <!-- Title -->
+        <div class="text-center mb-8 sm:mb-10">
+            <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-gray-900">
+                Attendance System
+            </h1>
+            <p class="text-gray-500 text-sm">
+                Buat password baru
+            </p>
         </div>
 
-        <!-- Footer -->
-        <p class="text-center text-xs text-gray-400 mt-6">
-            © {{ date('Y') }} Attendance System. All rights reserved.
-        </p>
+        <!-- Status -->
+        @if (session('status'))
+            <div class="mb-4 text-sm text-green-600 text-center">
+                {{ session('status') }}
+            </div>
+        @endif
+
+        <form wire:submit="resetPassword" class="space-y-5">
+
+            <!-- Email (readonly) -->
+            <div class="group">
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                    Email Address
+                </label>
+
+                <input wire:model="email" type="email" readonly
+                    class="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-200 text-gray-500 cursor-not-allowed">
+            </div>
+
+            <!-- Password -->
+            <div x-data="{ show: false }" class="group">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="text-xs font-semibold uppercase tracking-wider text-gray-700">
+                        Password Baru
+                    </label>
+
+                    <button type="button" @click="show = !show"
+                        class="text-xs font-medium text-[#8c7851] hover:underline">
+                        <span x-text="show ? 'Sembunyikan' : 'Lihat'"></span>
+                    </button>
+                </div>
+
+                <input :type="show ? 'text' : 'password'" wire:model="password" placeholder="Minimal 8 karakter"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+
+                @error('password')
+                    <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="group">
+                <label class="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                    Konfirmasi Password
+                </label>
+
+                <input wire:model="password_confirmation" type="password" placeholder="Ulangi password"
+                    class="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 outline-none transition-all duration-300 focus:border-[#8c7851] focus:ring-2 focus:ring-[#8c7851]/20">
+            </div>
+
+            <!-- Button -->
+            <button type="submit" wire:loading.attr="disabled"
+                class="w-full py-3 px-4 rounded-xl text-white font-bold tracking-wide transition-all duration-300 active:scale-95"
+                style="background-color: #1a1c1e;">
+                <span wire:loading.remove>RESET PASSWORD</span>
+                <span wire:loading>Menyimpan...</span>
+            </button>
+
+        </form>
 
     </div>
+
+    <!-- Footer -->
+    <p class="text-center text-[10px] text-gray-400 mt-4">
+        © {{ date('Y') }} Attendance System
+    </p>
+
 </div>
