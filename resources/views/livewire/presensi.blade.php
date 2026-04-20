@@ -6,10 +6,10 @@
 
             <!-- Header -->
             <h1>
-                <div class="text-xl font-bold text-gray-800 dark:text-gray-100">
+                <div class="text-xl font-bold text-gray-800 dark:text-gray-600">
                     Presensi {{ $month_year }}
                 </div>
-                <div class="text-gray-800 dark:text-gray-300">
+                <div class="text-gray-800 dark:text-gray-600">
                     {{ auth()->user()->name }} / {{ auth()->user()->id_karyawan }}
                     {{ auth()->user()->outsource ? '' : ' / Non-OS' }}
                 </div>
