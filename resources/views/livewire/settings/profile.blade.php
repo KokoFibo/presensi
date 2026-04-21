@@ -40,6 +40,13 @@ new class extends Component {
 
         $user->save();
 
+        // 🔥 CALL API AFTER SAVE
+        // $response = Http::post('http://127.0.0.1:8001/api/user/update-email', [
+        $response = Http::post('https://' . $user->db_code . '.yifang.co.id/api/user/update-email', [
+            'id' => $user->id_unik_karyawan,
+            'email' => $validated['email'],
+        ]);
+
         $this->dispatch('profile-updated', name: $user->name);
     }
 
