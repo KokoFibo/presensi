@@ -23,11 +23,12 @@
         gtag('config', 'G-BZ6XPXRVDJ');
     </script>
 
+
     <!-- ✅ PWA -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#0f172a">
 
-    <title>Sistem Presensi Karyawan</title>
+    <title>Attendance System</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -40,18 +41,25 @@
         <div class="mt-10 text-center">
 
             <!-- Logo -->
-            <div class="w-24 h-24 mx-auto mb-6">
-                <img src="/icons/icon-512.png"
-                    class="w-full h-full object-cover rounded-full shadow-xl border border-[#d4af37]/20">
+            <div
+                class="w-20 h-20 bg-[#1a1c1e] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-xl rotate-3 hover:rotate-0 transition duration-300">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-[#d4af37]" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+
             </div>
 
             <!-- Title -->
             <h1 class="text-3xl font-bold tracking-tight mb-2">
-                Sistem Presensi Karyawan
+                Attendance <span class="text-[#8c7851]">System</span>
             </h1>
 
             <p class="text-sm text-[#8c7851]/80 font-medium">
-                Lihat data kehadiran Anda dengan mudah
+                Manajemen kehadiran dalam satu genggaman.
             </p>
 
         </div>
@@ -69,7 +77,7 @@
                 </p>
 
                 <h2 class="text-2xl font-serif text-[#1a1c1e]/90">
-                    Silakan login untuk mengakses data presensi Anda
+                    Siap untuk mulai bekerja hari ini?
                 </h2>
             </div>
 
@@ -86,7 +94,7 @@
             @else
                 <a href="{{ route('login') }}"
                     class="w-full block text-center bg-[#1a1c1e] text-white py-4 rounded-xl font-semibold shadow-lg hover:opacity-90 active:scale-[0.98] transition">
-                    Login
+                    Masuk Sekarang
                 </a>
             @endauth
 
@@ -99,20 +107,20 @@
 
             <div class="pt-6 text-center">
                 <p class="text-[10px] text-[#8c7851]/50 uppercase tracking-widest">
-                    © {{ date('Y') }} Sistem Presensi Karyawan
+                    © {{ date('Y') }} Attendance System
                 </p>
             </div>
 
         </div>
 
     </div>
-
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(() => console.log('Service Worker registered'));
         }
     </script>
+
 
 </body>
 
