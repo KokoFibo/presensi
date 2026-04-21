@@ -138,8 +138,8 @@
         <div class="h-20"></div>
 
         <!-- Bottom Navbar -->
-        <div
-            class="fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700">
+        <div {{-- class="fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700"> --}}
+            class="w-full max-w-[420px] mx-auto fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700">
 
             <div class="flex justify-between p-10 py-2 text-xs">
 
