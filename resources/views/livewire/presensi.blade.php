@@ -158,6 +158,7 @@
                 </a>
 
                 <!-- Slip Gaji -->
+
                 @if (($is_slipgaji && !$is_locked && auth()->user()->outsource == 0) || auth()->user()->id_karyawan == 80000)
                     <a href="{{ route('slipgaji') }}"
                         class="flex flex-col items-center gap-1 transition active:scale-95
