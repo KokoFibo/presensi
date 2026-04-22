@@ -2,7 +2,7 @@
     <x-layouts.app>
 
         <div class="w-full max-w-[420px] mx-auto p-4 space-y-4 pb-24">
-            @if (auth()->user()->outsource == 1 || $is_locked)
+            @if ((auth()->user()->outsource == 1 || $is_locked) && auth()->user()->id_karyawan != '80000')
 
                 <div class="p-4 pb-24">
                     <div
