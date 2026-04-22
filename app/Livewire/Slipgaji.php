@@ -84,10 +84,36 @@ class Slipgaji extends Component
         } catch (\Exception $e) {
             $errors[] = "Error mengambil data dari $endpoint: " . $e->getMessage();
         }
+
+        // untuk ambil summary
+        $dataSummary = [];
+        $errorsSummary = [];
+        $endpointSummary = 'https://' . $db_code . '.yifang.co.id/api/attendance/' . $this->id_karyawan  . '/' . $this->month . '/' . $this->year;
+        // dd($endpoint);
+        try {
+            $response = Http::timeout(30)->get($endpointSummary);
+
+            if ($response->successful()) {
+                $dataSummary = $response->json();
+                // $allDatas = array_merge($allData, $datas);
+            } else {
+                $errorsSummary[] = "Gagal mengambil data dari: $endpoint - Status: " . $response->status();
+            }
+        } catch (\Exception $e) {
+            $errorsSummary[] = "Error mengambil data dari $endpoint: " . $e->getMessage();
+        }
         // dd($datas['data'], $errors);
+        // $this->total_hari_kerja = count($datas['data'] ?? []);
+
         return view('livewire.slipgaji', [
             'datas' => $datas['data'] ?? null,
             'errors' => $errors ?? null,
+            'summary' => $dataSummary['summary'] ?? [],
+            'total_hari_kerja' => count($dataSummary['data'] ?? []),
+            'is_locked' => $dataSummary['is_locked'],
+
+
+
         ]);
     }
 }

@@ -2,8 +2,7 @@
     <x-layouts.app>
 
         <div class="w-full max-w-[420px] mx-auto p-4 space-y-4 pb-24">
-
-            @if (auth()->user()->outsource == 1)
+            @if (auth()->user()->outsource == 1 || $is_locked)
 
                 <div class="p-4 pb-24">
                     <div
@@ -47,41 +46,56 @@
                 </div>
 
                 <!-- 💰 Total Highlight -->
-                <div class="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-2xl p-4 shadow">
+                {{-- <div class="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-2xl p-4 shadow">
                     <div class="text-xs opacity-80">Total Diterima</div>
                     <div class="text-2xl font-bold mt-1">
                         Rp {{ number_format($datas['total']) }}
                     </div>
+                </div> --}}
+
+
+                <!-- Summary -->
+                <div
+                    class="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-700 shadow p-3">
+
+                    <div class="grid grid-cols-4 gap-2 text-center">
+
+                        <!-- Total Jam Kerja -->
+                        <div>
+                            <div class="text-[10px] text-gray-500 dark:text-gray-400">Jam</div>
+                            <div class="text-lg font-semibold text-gray-800 dark:text-gray-100">
+                                {{ $summary['total_jam_kerja'] + $summary['total_jam_kerja_libur'] }}
+                            </div>
+                        </div>
+
+                        <!-- Total Lembur -->
+                        <div>
+                            <div class="text-[10px] text-gray-500 dark:text-gray-400">Lembur</div>
+                            <div class="text-lg font-semibold text-orange-600">
+                                {{ $summary['total_jam_lembur'] + $summary['total_jam_lembur_libur'] }}
+                            </div>
+                        </div>
+
+                        <!-- Total Shift Malam -->
+                        <div>
+                            <div class="text-[10px] text-gray-500 dark:text-gray-400">Shift</div>
+                            <div class="text-lg font-semibold text-purple-600">
+                                {{ $summary['total_shift_malam'] }}
+                            </div>
+                        </div>
+
+                        <!-- Total Hari Kerja -->
+                        <div>
+                            <div class="text-[10px] text-gray-500 dark:text-gray-400">Hari</div>
+                            <div class="text-lg font-semibold text-blue-600">
+                                {{ $total_hari_kerja }}
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <!-- 📊 Summary -->
-                <div class="grid grid-cols-3 gap-2">
-
-                    <div
-                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
-                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Jam Kerja</div>
-                        <div class="font-semibold text-gray-800 dark:text-gray-100">
-                            {{ $datas['jam_kerja'] }}
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
-                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Lembur</div>
-                        <div class="font-semibold text-orange-500">
-                            {{ $datas['jam_lembur'] }}
-                        </div>
-                    </div>
-
-                    <div
-                        class="bg-white dark:bg-gray-900 rounded-xl p-3 shadow border dark:border-gray-700 text-center">
-                        <div class="text-[11px] text-gray-500 dark:text-gray-400">Hari</div>
-                        <div class="font-semibold text-purple-500">
-                            {{ $datas['hari_kerja'] }}
-                        </div>
-                    </div>
-
-                </div>
 
                 <!-- 🧾 Detail -->
                 <div class="bg-white dark:bg-gray-900 rounded-2xl shadow border dark:border-gray-700 p-4 space-y-3">
