@@ -1,6 +1,18 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZ6XPXRVDJ"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
 
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-BZ6XPXRVDJ');
+</script>
 <title>{{ $title ?? 'Attendance System' }}</title>
 
 <link rel="preconnect" href="https://fonts.bunny.net">
