@@ -2,6 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="darkt">
 
 <head>
+    <meta name="robots" content="noindex, nofollow">
+
     @include('partials.head')
 </head>
 
