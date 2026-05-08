@@ -129,6 +129,17 @@
                             <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_lembur'] }}
                                 jam</span>
                         </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">Potongan</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['potongan1x']) }}</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">Denda Lupa Absen</span>
+
+                            <span class="font-medium text-red-500">Rp
+                                {{ number_format($datas['denda_lupa_absen']) }}</span>
+
+                        </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS JHT</span>
@@ -157,7 +168,6 @@
                             <span class="text-gray-500 dark:text-gray-400">PPh21</span>
                             <span class="font-medium text-red-500">Rp {{ number_format($datas['pph21']) }}</span>
                         </div>
-
                     </div>
 
                     <div class="border-t dark:border-gray-700 pt-3 flex justify-between items-center">
