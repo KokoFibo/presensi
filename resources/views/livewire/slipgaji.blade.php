@@ -126,7 +126,8 @@
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Jam Lembur</span>
-                            <span class="font-medium text-orange-500">{{ $datas['jam_lembur'] }} jam</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_lembur'] }}
+                                jam</span>
                         </div>
 
                         <div class="flex justify-between py-2">
@@ -137,6 +138,14 @@
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS JP</span>
                             <span class="font-medium text-red-500">Rp {{ number_format($datas['jp']) }}</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">BPJS Kesehatan</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['kesehatan']) }}</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">BPJS Tanggungan</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['tanggungan']) }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
@@ -153,7 +162,7 @@
 
                     <div class="border-t dark:border-gray-700 pt-3 flex justify-between items-center">
                         <span class="font-semibold text-gray-800 dark:text-gray-100">
-                            Total Bersih
+                            Total Terima
                         </span>
                         <span class="text-lg font-bold text-blue-600">
                             Rp {{ number_format($datas['total']) }}
