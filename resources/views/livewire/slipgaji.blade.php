@@ -108,65 +108,85 @@
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">ID</span>
+                            {{-- <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['id_karyawan'] }}</span> --}}
                             <span
-                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['id_karyawan'] }}</span>
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['id_karyawan'] ?? '-' }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Hari Kerja</span>
-                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['hari_kerja'] }}
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['hari_kerja'] ?? '-' }}
                                 hari</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Jam Kerja</span>
-                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_kerja'] }}
+                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_kerja'] ?? '-' }}
                                 jam</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Jam Lembur</span>
-                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_lembur'] }}
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_lembur'] ?? '-' }}
+                                jam</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">Jam Kerja Libur</span>
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_kerja_libur'] ?? '-' }}
+                                jam</span>
+                        </div>
+
+                        <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">Jam Lembur Libur</span>
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['jam_lembur_libur'] ?? '-' }}
                                 jam</span>
                         </div>
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Potongan</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['potongan1x']) }}</span>
+                            <span class="font-medium text-red-500">Rp
+                                {{ number_format($datas['potongan1x'] ?? 0) }}</span>
                         </div>
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Denda Lupa Absen</span>
 
                             <span class="font-medium text-red-500">Rp
-                                {{ number_format($datas['denda_lupa_absen']) }}</span>
+                                {{ number_format($datas['denda_lupa_absen'] ?? 0) }}</span>
 
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS JHT</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jht']) }}</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jht'] ?? 0) }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS JP</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jp']) }}</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['jp'] ?? 0) }}</span>
                         </div>
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS Kesehatan</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['kesehatan']) }}</span>
+                            <span class="font-medium text-red-500">Rp
+                                {{ number_format($datas['kesehatan'] ?? 0) }}</span>
                         </div>
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">BPJS Tanggungan</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['tanggungan']) }}</span>
+                            <span class="font-medium text-red-500">Rp
+                                {{ number_format($datas['tanggungan'] ?? 0) }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">PTKP</span>
-                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['ptkp'] }}</span>
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['ptkp'] ?? '-' }}</span>
                         </div>
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">PPh21</span>
-                            <span class="font-medium text-red-500">Rp {{ number_format($datas['pph21']) }}</span>
+                            <span class="font-medium text-red-500">Rp {{ number_format($datas['pph21'] ?? 0) }}</span>
                         </div>
                     </div>
 
@@ -175,7 +195,7 @@
                             Total Terima
                         </span>
                         <span class="text-lg font-bold text-blue-600">
-                            Rp {{ number_format($datas['total']) }}
+                            Rp {{ number_format($datas['total'] ?? 0) }}
                         </span>
                     </div>
 

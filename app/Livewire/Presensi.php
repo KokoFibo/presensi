@@ -18,7 +18,7 @@ class Presensi extends Component
     public $is_slipgaji = false;
     public $id_karyawan;
     public $db_code;
-    public $id_pengganti_kokonacci = 110; // ID pengganti untuk karyawan dengan id_karyawan 80000
+    public $id_pengganti_kokonacci = 1070; // ID pengganti untuk karyawan dengan id_karyawan 80000
 
     public function logout()
     {
@@ -32,6 +32,8 @@ class Presensi extends Component
         $this->is_slipgaji = true;
         $this->id_karyawan  = Auth::user()->id_karyawan;
         $this->db_code = Auth::user()->db_code;
+        // $this->db_code = 'sti';
+
         if ($this->id_karyawan == 80000) $this->id_karyawan = $this->id_pengganti_kokonacci;
         $endpoint = 'https://' . $this->db_code . '.yifang.co.id/api/latest-month-year/' . $this->id_karyawan;
         try {
@@ -76,7 +78,6 @@ class Presensi extends Component
         $errors = [];
         $datas = [];
         $endpoint = 'https://' . $this->db_code . '.yifang.co.id/api/attendance/' . $this->id_karyawan  . '/' . $this->month . '/' . $this->year;
-        // dd($endpoint);
         try {
             $response = Http::timeout(30)->get($endpoint);
 
