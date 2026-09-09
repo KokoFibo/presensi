@@ -79,6 +79,7 @@ class Slipgaji extends Component
 
             if ($response->successful()) {
                 $datas = $response->json();
+                // dd($datas);
                 // $allDatas = array_merge($allData, $datas);
             } else {
                 $errors[] = "Gagal mengambil data dari: $endpoint - Status: " . $response->status();

@@ -146,6 +146,12 @@
                                 jam</span>
                         </div>
                         <div class="flex justify-between py-2">
+                            <span class="text-gray-500 dark:text-gray-400">Gaji Libur</span>
+                            <span class="font-medium text-gray-800 dark:text-gray-100">Rp
+                                {{ number_format($datas['gaji_libur'] ?? 0) }}
+                            </span>
+                        </div>
+                        <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Potongan</span>
                             <span class="font-medium text-red-500">Rp
                                 {{ number_format($datas['potongan1x'] ?? 0) }}</span>
