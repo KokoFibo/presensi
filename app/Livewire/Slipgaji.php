@@ -16,7 +16,7 @@ class Slipgaji extends Component
     public $selectedMonth;
     public $year;
     public $id_karyawan;
-    public $id_pengganti_kokonacci = 110; // ID pengganti untuk karyawan dengan id_karyawan 80000
+    public $id_pengganti_kokonacci = 1088; // ID pengganti untuk karyawan dengan id_karyawan 80000
 
     public function logout()
     {
@@ -67,11 +67,13 @@ class Slipgaji extends Component
         if ($this->id_karyawan == 80000) $this->id_karyawan = $this->id_pengganti_kokonacci;
 
         $db_code = Auth::user()->db_code;
+        // $db_code = 'sti';
         // $this->month = 3;
         // $this->year = 2026;
         $datas = [];
         $errors = [];
         $endpoint = 'https://' . $db_code . '.yifang.co.id/api/get-payroll/' . $this->id_karyawan . '/' . $this->month . '/' . $this->year;
+        // dd($endpoint);
         try {
             $response = Http::timeout(30)->get($endpoint);
 
