@@ -98,12 +98,10 @@ class Presensi extends Component
     public function cekPendidikan(): bool
     {
         try {
-            // $response = Http::get(
-            //     url('https://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan')
-            // );
             $response = Http::get(
-                url('http://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan')
+                url('https://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan')
             );
+
             if ($response->successful()) {
                 $data = $response->json();
 
