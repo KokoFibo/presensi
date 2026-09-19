@@ -384,6 +384,22 @@
                     @endforeach
                 </select>
 
+                <!-- Alert jika data gagal dimuat -->
+                @if (!empty($apiErrors))
+                    <div
+                        class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 flex items-start gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9v3.75m0 3.75h.008v.008H12v-.008zM21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p class="text-sm text-amber-800 dark:text-amber-300">
+                            Data presensi sedang tidak dapat dimuat sepenuhnya. Silakan coba muat ulang halaman.
+                        </p>
+                    </div>
+                @endif
+
                 <!-- Summary -->
                 <div
                     class="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-700 shadow p-3">
@@ -394,7 +410,7 @@
                         <div>
                             <div class="text-[10px] text-gray-500 dark:text-gray-400">Jam</div>
                             <div class="text-lg font-semibold text-gray-800 dark:text-gray-100">
-                                {{ $summary['total_jam_kerja'] + $summary['total_jam_kerja_libur'] }}
+                                {{ ($summary['total_jam_kerja'] ?? 0) + ($summary['total_jam_kerja_libur'] ?? 0) }}
                             </div>
                         </div>
 
@@ -402,7 +418,7 @@
                         <div>
                             <div class="text-[10px] text-gray-500 dark:text-gray-400">Lembur</div>
                             <div class="text-lg font-semibold text-orange-600">
-                                {{ $summary['total_jam_lembur'] + $summary['total_jam_lembur_libur'] }}
+                                {{ ($summary['total_jam_lembur'] ?? 0) + ($summary['total_jam_lembur_libur'] ?? 0) }}
                             </div>
                         </div>
 
@@ -410,7 +426,7 @@
                         <div>
                             <div class="text-[10px] text-gray-500 dark:text-gray-400">Shift</div>
                             <div class="text-lg font-semibold text-purple-600">
-                                {{ $summary['total_shift_malam'] }}
+                                {{ $summary['total_shift_malam'] ?? 0 }}
                             </div>
                         </div>
 
@@ -427,13 +443,13 @@
                 </div>
 
                 <!-- List Data -->
-                @foreach ($datas as $value)
+                @forelse ($datas as $value)
                     <div
                         class="bg-white dark:bg-gray-900 rounded-2xl shadow border border-gray-100 dark:border-gray-700 p-4 space-y-4">
 
                         <!-- Tanggal -->
                         <div class="text-sm font-semibold text-gray-800 dark:text-gray-100">
-                            {{ tgl_indo($value['date']) }}
+                            {{ tgl_indo($value['date'] ?? '') }}
                         </div>
 
                         <!-- Grid 3 Kolom -->
@@ -449,9 +465,10 @@
                                             d="M3 7.5l9-4.5 9 4.5M4.5 9.75v6.75A2.25 2.25 0 006.75 18.75h10.5A2.25 2.25 0 0019.5 16.5V9.75M9 12h6" />
                                     </svg>
                                 </div>
-                                <div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">Jam Kerja</div>
+                                <div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">Jam Kerja
+                                </div>
                                 <div class="font-semibold text-[12px] text-gray-800 dark:text-gray-100">
-                                    {{ $value['total_jam_kerja'] + $value['total_jam_kerja_libur'] }}
+                                    {{ ($value['total_jam_kerja'] ?? 0) + ($value['total_jam_kerja_libur'] ?? 0) }}
                                 </div>
                             </div>
 
@@ -467,7 +484,7 @@
                                 </div>
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">Lembur</div>
                                 <div class="font-semibold text-[12px] text-orange-600">
-                                    {{ $value['total_jam_lembur'] + $value['total_jam_lembur_libur'] }}
+                                    {{ ($value['total_jam_lembur'] ?? 0) + ($value['total_jam_lembur_libur'] ?? 0) }}
                                 </div>
                             </div>
 
@@ -485,14 +502,26 @@
                                 <div class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight">Shift Malam
                                 </div>
                                 <div
-                                    class="font-semibold text-[12px] {{ $value['shift_malam'] ? 'text-purple-600' : 'text-gray-400 dark:text-gray-500' }}">
-                                    {{ $value['shift_malam'] ? '✓' : '' }}
+                                    class="font-semibold text-[12px] {{ $value['shift_malam'] ?? false ? 'text-purple-600' : 'text-gray-400 dark:text-gray-500' }}">
+                                    {{ $value['shift_malam'] ?? false ? '✓' : '' }}
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="flex flex-col items-center justify-center py-12 text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="h-10 w-10 text-gray-300 dark:text-gray-700 mb-3" fill="none"
+                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        <p class="text-sm text-gray-400 dark:text-gray-500">
+                            Belum ada data presensi untuk bulan ini.
+                        </p>
+                    </div>
+                @endforelse
 
             </div>
 
@@ -500,7 +529,7 @@
             <div class="h-20"></div>
 
             <!-- Bottom Navbar -->
-            <div {{-- class="fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700"> --}}
+            <div
                 class="w-full max-w-[420px] mx-auto fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700">
 
                 <div class="flex justify-between p-10 py-2 text-xs">

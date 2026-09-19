@@ -9,8 +9,6 @@ use Illuminate\Support\Str;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-
-// class Presensi extends Component
 class Presensi extends Component
 {
     public $month;
@@ -22,7 +20,7 @@ class Presensi extends Component
     public $id_karyawan;
     public $db_code;
     public $id_pengganti_kokonacci = 1070;
-    public $is_filled = true; // ID pengganti untuk karyawan dengan id_karyawan 80000
+    public $is_filled = true;
 
     public $pendidikan = '';
     public $jurusan = '';
@@ -43,12 +41,9 @@ class Presensi extends Component
         return in_array($this->pendidikan, ['SMA/SMK', 'D1', 'D2', 'D3', 'D4', 'S1', 'S2', 'S3']);
     }
 
-
-
     protected $messages = [
         'pendidikan.required' => 'Pendidikan wajib diisi.',
     ];
-
 
     public function simpanPendidikan()
     {
@@ -65,14 +60,16 @@ class Presensi extends Component
         $this->validate();
 
         try {
-            $response = Http::put(
-                url('http://127.0.0.1:8080/api/karyawan/' . $this->id_karyawan . '/pendidikan'),
-                [
-                    'pendidikan'  => $this->pendidikan,
-                    'jurusan'     => $this->jurusan,
-                    'nama_kampus' => $this->nama_kampus,
-                ]
-            );
+            $response = Http::timeout(30)
+                ->retry(2, 200)
+                ->put(
+                    url('https://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan'),
+                    [
+                        'pendidikan'  => $this->pendidikan,
+                        'jurusan'     => $this->jurusan,
+                        'nama_kampus' => $this->nama_kampus,
+                    ]
+                );
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -80,14 +77,23 @@ class Presensi extends Component
 
                 session()->flash('message', 'Data pendidikan berhasil disimpan.');
             } else {
+                logger()->error('Presensi simpanPendidikan() gagal', [
+                    'status'      => $response->status(),
+                    'body'        => $response->body(),
+                    'id_karyawan' => $this->id_karyawan,
+                    'db_code'     => $this->db_code,
+                ]);
                 $this->addError('pendidikan', 'Gagal menyimpan data. Silakan coba lagi.');
             }
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error('Presensi simpanPendidikan() exception', [
+                'message'     => $e->getMessage(),
+                'id_karyawan' => $this->id_karyawan,
+                'db_code'     => $this->db_code,
+            ]);
             $this->addError('pendidikan', 'Terjadi kesalahan koneksi. Silakan coba lagi.');
         }
     }
-
 
     public function logout()
     {
@@ -98,9 +104,11 @@ class Presensi extends Component
     public function cekPendidikan(): bool
     {
         try {
-            $response = Http::get(
-                url('https://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan')
-            );
+            $response = Http::timeout(30)
+                ->retry(2, 200)
+                ->get(
+                    url('https://' . $this->db_code . '.yifang.co.id/api/karyawan/' . $this->id_karyawan . '/pendidikan')
+                );
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -111,9 +119,20 @@ class Presensi extends Component
                 return $this->pendidikanSudahTerisi === true;
             }
 
+            logger()->error('Presensi cekPendidikan() gagal', [
+                'status'      => $response->status(),
+                'body'        => $response->body(),
+                'id_karyawan' => $this->id_karyawan,
+                'db_code'     => $this->db_code,
+            ]);
+
             return false;
         } catch (\Exception $e) {
-            logger()->error($e->getMessage());
+            logger()->error('Presensi cekPendidikan() exception', [
+                'message'     => $e->getMessage(),
+                'id_karyawan' => $this->id_karyawan,
+                'db_code'     => $this->db_code,
+            ]);
 
             $this->pendidikan = '';
             $this->pendidikanSudahTerisi = false;
@@ -124,97 +143,103 @@ class Presensi extends Component
 
     public function mount()
     {
-        // Route::get('/latest-month-year/{user_id}', [AttendanceController::class, 'getLatestMonthYearByUser']);
         $this->is_slipgaji = true;
-        $this->id_karyawan  = Auth::user()->id_karyawan;
+        $this->id_karyawan = Auth::user()->id_karyawan;
         $this->db_code = Auth::user()->db_code;
-        // $this->db_code = 'sti';
 
-        // Cek  apakah karyawan sudah mengisi data pendidikan
-        // $this->db_code = 'payroll';
-
-        // $this->id_karyawan = 14669;
         $this->is_filled = true;
         if ($this->db_code == 'payroll' || $this->db_code == 'salary') {
-            $this->is_filled =  $this->cekPendidikan();
-            // dd($this->id_karyawan, $this->db_code, $is_filled);
+            $this->is_filled = $this->cekPendidikan();
         }
 
         if ($this->id_karyawan == 80000) $this->id_karyawan = $this->id_pengganti_kokonacci;
+
+        $datas = [];
         $endpoint = 'https://' . $this->db_code . '.yifang.co.id/api/latest-month-year/' . $this->id_karyawan;
+
         try {
-            $response = Http::timeout(30)->get($endpoint);
+            $response = Http::timeout(30)
+                ->retry(2, 200)
+                ->get($endpoint);
 
             if ($response->successful()) {
                 $datas = $response->json();
-                // $allDatas = array_merge($allData, $datas);
             } else {
-                $errors[] = "Gagal mengambil data dari: $endpoint - Status: " . $response->status();
+                logger()->error('Presensi mount() gagal ambil latest-month-year', [
+                    'endpoint'    => $endpoint,
+                    'status'      => $response->status(),
+                    'body'        => $response->body(),
+                    'id_karyawan' => $this->id_karyawan,
+                    'db_code'     => $this->db_code,
+                ]);
             }
         } catch (\Exception $e) {
-            $errors[] = "Error mengambil data dari $endpoint: " . $e->getMessage();
+            logger()->error('Presensi mount() exception latest-month-year', [
+                'endpoint'    => $endpoint,
+                'message'     => $e->getMessage(),
+                'id_karyawan' => $this->id_karyawan,
+                'db_code'     => $this->db_code,
+            ]);
         }
-        // dd($datas['month']);
-        // dd($datas);
 
-        // $this->month = Carbon::now()->month;
-        // $this->year = Carbon::now()->year;
-        // $this->selectedMonth = $this->month . '-' . $this->year;
-
-        $this->month = $datas['data']['month'];
-        $this->year = $datas['data']['year'];
-        $this->selectedMonth = $datas['data']['month_year'];
+        // Fallback ke bulan/tahun saat ini kalau API gagal atau data tidak lengkap
+        $this->month = $datas['data']['month'] ?? Carbon::now()->month;
+        $this->year = $datas['data']['year'] ?? Carbon::now()->year;
+        $this->selectedMonth = $datas['data']['month_year'] ?? Carbon::now()->format('F Y');
     }
+
     public function updatedSelectedMonth($key)
     {
-        $selected = $this->available_months[$key];
+        $selected = $this->available_months[$key] ?? null;
 
-        $this->month = $selected['month'];
-        $this->year = $selected['year'];
-        // dd($this->month, $this->year);
+        if ($selected) {
+            $this->month = $selected['month'];
+            $this->year = $selected['year'];
+        }
     }
+
     public function render()
     {
-        // $this->db_code = Auth::user()->db_code;
-        // $this->id_karyawan  = Auth::user()->id_karyawan;
-        // dd($this->id_karyawan);
-        // $this->month = 2;
-        // $this->year = 2026;
-        $allData = [];
         $errors = [];
         $datas = [];
-        $endpoint = 'https://' . $this->db_code . '.yifang.co.id/api/attendance/' . $this->id_karyawan  . '/' . $this->month . '/' . $this->year;
+        $endpoint = 'https://' . $this->db_code . '.yifang.co.id/api/attendance/' . $this->id_karyawan . '/' . $this->month . '/' . $this->year;
+
         try {
-            $response = Http::timeout(30)->get($endpoint);
+            $response = Http::timeout(30)
+                ->retry(2, 200)
+                ->get($endpoint);
 
             if ($response->successful()) {
                 $datas = $response->json();
-                // $allDatas = array_merge($allData, $datas);
             } else {
-                $errors[] = "Gagal mengambil data dari: $endpoint - Status: " . $response->status();
+                $errors[] = 'Data sedang tidak dapat dimuat. Silakan coba lagi.';
+                logger()->error('Presensi render() gagal ambil attendance', [
+                    'endpoint'    => $endpoint,
+                    'status'      => $response->status(),
+                    'body'        => $response->body(),
+                    'id_karyawan' => $this->id_karyawan,
+                    'db_code'     => $this->db_code,
+                ]);
             }
         } catch (\Exception $e) {
-            $errors[] = "Error mengambil data dari $endpoint: " . $e->getMessage();
+            $errors[] = 'Data sedang tidak dapat dimuat. Silakan coba lagi.';
+            logger()->error('Presensi render() exception attendance', [
+                'endpoint'    => $endpoint,
+                'message'     => $e->getMessage(),
+                'id_karyawan' => $this->id_karyawan,
+                'db_code'     => $this->db_code,
+            ]);
         }
 
         $this->available_months = $datas['available_months'] ?? [];
-        // dd($datas);
-        // dd($datas['data']);
-        // dd($datas['available_months']);
-        // dd($datas['summary']);
-        // dd($datas['current_month_year']['month_year']);
-        // dd($datas['message']);
-
         $this->total_hari_kerja = count($datas['data'] ?? []);
-        // dd($datas['is_locked']);
+
         return view('livewire.presensi', [
-            'datas' => $datas['data'] ?? [],
-            'month_year' => $datas['current_month_year']['month_year'] ?? '',
-            'summary' => $datas['summary'] ?? [],
-            'is_locked' => $datas['is_locked'],
-            // 'available_months' => $datas['available_months'] ?? [],
-            // 'errors' => $errors,
-            'apiErrors' => $errors,
+            'datas'       => $datas['data'] ?? [],
+            'month_year'  => $datas['current_month_year']['month_year'] ?? '',
+            'summary'     => $datas['summary'] ?? [],
+            'is_locked'   => $datas['is_locked'] ?? true,
+            'apiErrors'   => $errors,
         ]);
     }
 }
