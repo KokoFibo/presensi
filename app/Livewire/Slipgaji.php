@@ -16,7 +16,7 @@ class Slipgaji extends Component
     public $selectedMonth;
     public $year;
     public $id_karyawan;
-    public $id_pengganti_kokonacci = 1088; // ID pengganti untuk karyawan dengan id_karyawan 80000
+    public $id_pengganti_kokonacci = 1070; // ID pengganti untuk karyawan dengan id_karyawan 80000
 
     public function logout()
     {

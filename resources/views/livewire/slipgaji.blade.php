@@ -113,10 +113,18 @@
                             <span
                                 class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['id_karyawan'] ?? '-' }}</span>
                         </div>
+                        @if ($datas['gaji_pokok'] >= 5200000)
+                            <div class="flex justify-between py-2">
+                                <span class="text-gray-500 dark:text-gray-400">Gaji Pokok</span>
+                                <span
+                                    class="font-medium text-gray-800 dark:text-gray-100">{{ number_format($datas['gaji_pokok']) ?? '-' }}</span>
+                            </div>
+                        @endif
 
                         <div class="flex justify-between py-2">
                             <span class="text-gray-500 dark:text-gray-400">Hari Kerja</span>
-                            <span class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['hari_kerja'] ?? '-' }}
+                            <span
+                                class="font-medium text-gray-800 dark:text-gray-100">{{ $datas['hari_kerja'] ?? '-' }}
                                 hari</span>
                         </div>
 
