@@ -1,7 +1,8 @@
 <div>
     <x-layouts.app>
-        @if ($is_filled != true)
+        {{-- @if ($is_filled != true) --}}
 
+        @if ($is_filled != true)
             <div x-data="{ showConfirm: false }" class="w-full max-w-2xl mx-auto">
 
                 {{-- ========================= --}}
@@ -39,7 +40,7 @@
 
                             <div>
                                 <h2 class="text-xl font-bold tracking-tight text-white">
-                                    Lengkapi Pendidikan
+                                    Lengkapi Pendidikan {{ $id_karyawan }}
                                 </h2>
 
                                 <p class="mt-1 text-sm text-blue-100">
@@ -429,6 +430,7 @@
                                 {{ $summary['total_shift_malam'] ?? 0 }}
                             </div>
                         </div>
+
 
                         <!-- Total Hari Kerja -->
                         <div>
