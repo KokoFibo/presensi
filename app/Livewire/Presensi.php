@@ -374,12 +374,15 @@ class Presensi extends Component
         /*
          * Hanya payroll dan salary yang membutuhkan pengecekan pendidikan.
          */
-        if (
-            $this->db_code === 'payroll' ||
-            $this->db_code === 'salary'
-        ) {
-            $this->is_filled = $this->cekPendidikan();
-        }
+        // if (
+        //     $this->db_code === 'payroll' ||
+        //     $this->db_code === 'salary'
+        // ) {
+        //     $this->is_filled = $this->cekPendidikan();
+        // }
+        // cek apakah pendidikan sudah terisi, jika tidak maka tampilkan form untuk mengisi pendidikan
+        $this->is_filled = $this->cekPendidikan();
+
 
         /*
          * Ambil bulan/tahun terbaru.
